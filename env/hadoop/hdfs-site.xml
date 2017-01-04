@@ -36,4 +36,56 @@
 <name>dfs.namenode.handler.count</name>
 <value>10</value>
 </property>
+<!--配置集群名称-->
+<property>
+<name>dfs.nameservices</name>
+<value>hadoop-cluster</value>
+</property>
+<!--配置集群namenode列表-->
+<property>
+  <name>dfs.ha.namenodes.hadoop-cluster</name>
+  <value>cluster.namenode1.server,cluster.namenode2.server</value>
+</property>
+<!--namenode的RPC监听端口-->
+<property>
+  <name>dfs.namenode.rpc-address.hadoop-cluster.namenode1</name>
+  <value>cluster.namenode1.server:8020</value>
+</property>
+<property>
+  <name>dfs.namenode.rpc-address.hadoop-cluster.namenode2</name>
+  <value>cluster.namenode2.server:8020</value>
+</property>
+<!--namenode的http监听端口-->
+<property>
+  <name>dfs.namenode.http-address.hadoop-cluster.namenode1</name>
+  <value>cluster.namenode1.server:50070</value>
+</property>
+<property>
+  <name>dfs.namenode.http-address.hadoop-cluster.namenode2</name>
+  <value>cluster.namenode2.server:50070</value>
+</property>
+<!--journalnode列表-->
+<property>
+  <name>dfs.namenode.shared.edits.dir</name>
+  <value>qjournal://cluster.journalnode.server:8485;cluster.journalnode.server:8485;cluster.journalnode.server:8485/hadoop-cluster</value>
+</property>
+<!--当active namenode宕机时.该类可以返回一个新的strandy节点-->
+<property>
+  <name>dfs.client.failover.proxy.provider.mycluster</name>
+  <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+</property>
+<!--active namenode出错时的处理方法-->
+<property>
+  <name>dfs.ha.fencing.methods</name>
+  <value>sshfence</value>
+</property>
+<property>
+ <name>dfs.ha.fencing.ssh.private-key-files</name>
+ <value>/root/.ssh/id_rsa</value>
+</property>
+<!--用于journalnode同步的edits日志目录-->
+<property>
+  <name>dfs.journalnode.edits.dir</name>
+  <value>/hadoop/journal-edits-data</value>
+</property>
 </configuration>

@@ -18,7 +18,7 @@
 <configuration>
 <property>
 <name>fs.defaultFS</name>
-<value>hdfs://cluster.namenode.server:9000</value>
+<value>hdfs://hadoop-cluster</value>
 </property>
 <property>
 <name>hadoop.tmp.dir</name>
