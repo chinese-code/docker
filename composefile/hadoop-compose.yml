@@ -23,7 +23,7 @@ services:
     cluster.namenode2.server:
         image: tumingjian/oracle-jdk
         restart: always
-        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode -format -force && bin/hdfs namenode"
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd -d"
         volumes:
            - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
         environment:
