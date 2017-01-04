@@ -18,7 +18,7 @@
 <configuration>
 <property>
 <name>fs.defaultFS</name>
-<value>hdfs://hadoop-cluster</value>
+<value>hdfs://hadoopcluster</value>
 </property>
 <property>
 <name>hadoop.tmp.dir</name>

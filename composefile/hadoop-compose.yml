@@ -1,6 +1,6 @@
 version : '2'
 services:
-    cluster.namenode.server:
+    cluster.namenode1.server:
         image: tumingjian/oracle-jdk
         restart: always
         command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode -format && bin/hdfs namenode"
@@ -10,18 +10,36 @@ services:
            - HADOOP_HOME=/usr/local/hadoop
            - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
         working_dir: /usr/local/hadoop
-        ports:
-           - "50090:50090"
-           - "50070:50070"
-           - "8808:8808"
-           - "9000:9000"
-           - "50030:50030"
         networks: 
            default: 
              ipv4_address: 172.18.0.254
         dns:
            - 172.18.0.250
-        container_name: cluster.namenode.server
+        depends_on:
+           - cluster.journalnode1.server
+           - cluster.journalnode2.server
+           - cluster.journalnode3.server
+        container_name: cluster.namenode1.server
+    cluster.namenode2.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode"
+        volumes:
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
+        environment:
+           - HADOOP_HOME=/usr/local/hadoop
+           - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+        working_dir: /usr/local/hadoop
+        networks:
+           default:
+             ipv4_address: 172.18.0.252
+        dns:
+           - 172.18.0.250
+        depends_on:
+           - cluster.journalnode1.server
+           - cluster.journalnode2.server
+           - cluster.journalnode3.server
+        container_name: cluster.namenode2.server
     cluster.extramanager.server:
         image: tumingjian/oracle-jdk
         restart: always
@@ -38,13 +56,53 @@ services:
            - "18088:18088"
            - "19888:19888"
         links: 
-           - cluster.namenode.server
+           - cluster.namenode1.server
+           - cluster.namenode2.server
         networks: 
            default: 
              ipv4_address: 172.18.0.253
         dns:
            - 172.18.0.250
         container_name: cluster.extramanager.server
+    cluster.journalnode1.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs journalnode"
+        volumes:
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
+        environment:
+           - HADOOP_HOME=/usr/local/hadoop
+           - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+        working_dir: /usr/local/hadoop
+        dns:
+           - 172.18.0.250
+        container_name: cluster.journalnode1.server
+    cluster.journalnode2.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs journalnode"
+        volumes: 
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
+        environment:
+           - HADOOP_HOME=/usr/local/hadoop
+           - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+        working_dir: /usr/local/hadoop
+        dns:
+           - 172.18.0.250
+        container_name: cluster.journalnode2.server
+    cluster.journalnode3.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs journalnode"
+        volumes: 
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
+        environment:
+           - HADOOP_HOME=/usr/local/hadoop
+           - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+        working_dir: /usr/local/hadoop
+        dns:
+           - 172.18.0.250
+        container_name: cluster.journalnode3.server
     cluster.datanode1.server:
         image: tumingjian/oracle-jdk
         restart: always
@@ -56,13 +114,14 @@ services:
            - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
         working_dir: /usr/local/hadoop
         links: 
-         - cluster.namenode.server
+         - cluster.namenode1.server
+         - cluster.namenode2.server
          - cluster.extramanager.server
         dns:
            - 172.18.0.250
         container_name: cluster.datanode1.server
         depends_on: 
-           - cluster.namenode.server
+           - cluster.namenode1.server
            - cluster.extramanager.server
     cluster.datanode2.server:
         image: tumingjian/oracle-jdk
@@ -75,13 +134,14 @@ services:
            - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
         working_dir: /usr/local/hadoop
         links: 
-           - cluster.namenode.server
+           - cluster.namenode1.server
+           - cluster.namenode2.server
            - cluster.extramanager.server
         dns:
            - 172.18.0.250
         container_name: cluster.datanode2.server
         depends_on: 
-           - cluster.namenode.server
+           - cluster.namenode1.server
            - cluster.extramanager.server
     cluster.datanode3.server:
         image: tumingjian/oracle-jdk
@@ -94,13 +154,14 @@ services:
            - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
         working_dir: /usr/local/hadoop
         links: 
-          - cluster.namenode.server
+          - cluster.namenode1.server
+          - cluster.namenode2.server
           - cluster.extramanager.server     
         dns:
            - 172.18.0.250
         container_name: cluster.datanode3.server
         depends_on: 
-           - cluster.namenode.server
+           - cluster.namenode1.server
            - cluster.extramanager.server
     cluster.datanode4.server:
         image: tumingjian/oracle-jdk
@@ -113,13 +174,14 @@ services:
            - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
         working_dir: /usr/local/hadoop
         links:
-          - cluster.namenode.server
+          - cluster.namenode1.server
+          - cluster.namenode2.server
           - cluster.extramanager.server
         dns:
            - 172.18.0.250
         container_name: cluster.datanode4.server
         depends_on:
-           - cluster.namenode.server
+           - cluster.namenode1.server
            - cluster.extramanager.server
 networks: 
    default:

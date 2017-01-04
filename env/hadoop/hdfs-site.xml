@@ -39,39 +39,39 @@
 <!--配置集群名称-->
 <property>
 <name>dfs.nameservices</name>
-<value>hadoop-cluster</value>
+<value>hadoopcluster</value>
 </property>
 <!--配置集群namenode列表-->
 <property>
-  <name>dfs.ha.namenodes.hadoop-cluster</name>
-  <value>cluster.namenode1.server,cluster.namenode2.server</value>
+  <name>dfs.ha.namenodes.hadoopcluster</name>
+  <value>namenode1,namenode2</value>
 </property>
 <!--namenode的RPC监听端口-->
 <property>
-  <name>dfs.namenode.rpc-address.hadoop-cluster.namenode1</name>
+  <name>dfs.namenode.rpc-address.hadoopcluster.namenode1</name>
   <value>cluster.namenode1.server:8020</value>
 </property>
 <property>
-  <name>dfs.namenode.rpc-address.hadoop-cluster.namenode2</name>
+  <name>dfs.namenode.rpc-address.hadoopcluster.namenode2</name>
   <value>cluster.namenode2.server:8020</value>
 </property>
 <!--namenode的http监听端口-->
 <property>
-  <name>dfs.namenode.http-address.hadoop-cluster.namenode1</name>
+  <name>dfs.namenode.http-address.hadoopcluster.namenode1</name>
   <value>cluster.namenode1.server:50070</value>
 </property>
 <property>
-  <name>dfs.namenode.http-address.hadoop-cluster.namenode2</name>
+  <name>dfs.namenode.http-address.hadoopcluster.namenode2</name>
   <value>cluster.namenode2.server:50070</value>
 </property>
 <!--journalnode列表-->
 <property>
   <name>dfs.namenode.shared.edits.dir</name>
-  <value>qjournal://cluster.journalnode.server:8485;cluster.journalnode.server:8485;cluster.journalnode.server:8485/hadoop-cluster</value>
+  <value>qjournal://cluster.journalnode1.server:8485;cluster.journalnode2.server:8485;cluster.journalnode3.server:8485/hadoopcluster</value>
 </property>
 <!--当active namenode宕机时.该类可以返回一个新的strandy节点-->
 <property>
-  <name>dfs.client.failover.proxy.provider.mycluster</name>
+  <name>dfs.client.failover.proxy.provider.hadoopcluster</name>
   <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
 </property>
 <!--active namenode出错时的处理方法-->
@@ -80,6 +80,7 @@
   <value>sshfence</value>
 </property>
 <property>
+<!--配置为sshfence时，还需要配置SSH-->
  <name>dfs.ha.fencing.ssh.private-key-files</name>
  <value>/root/.ssh/id_rsa</value>
 </property>
