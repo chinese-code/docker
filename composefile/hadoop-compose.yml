@@ -3,7 +3,7 @@ services:
     cluster.namenode1.server:
         image: tumingjian/oracle-jdk
         restart: always
-        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode -format && bin/hdfs namenode"
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode -format -force && bin/hdfs namenode"
         volumes: 
            - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
         environment:
@@ -12,7 +12,7 @@ services:
         working_dir: /usr/local/hadoop
         networks: 
            default: 
-             ipv4_address: 172.18.0.254
+             ipv4_address: 172.18.0.231
         dns:
            - 172.18.0.250
         depends_on:
@@ -23,7 +23,7 @@ services:
     cluster.namenode2.server:
         image: tumingjian/oracle-jdk
         restart: always
-        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode"
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode -format -force && bin/hdfs namenode"
         volumes:
            - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
         environment:
@@ -32,7 +32,7 @@ services:
         working_dir: /usr/local/hadoop
         networks:
            default:
-             ipv4_address: 172.18.0.252
+             ipv4_address: 172.18.0.232
         dns:
            - 172.18.0.250
         depends_on:
@@ -76,6 +76,9 @@ services:
         working_dir: /usr/local/hadoop
         dns:
            - 172.18.0.250
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.241
         container_name: cluster.journalnode1.server
     cluster.journalnode2.server:
         image: tumingjian/oracle-jdk
@@ -89,6 +92,9 @@ services:
         working_dir: /usr/local/hadoop
         dns:
            - 172.18.0.250
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.242
         container_name: cluster.journalnode2.server
     cluster.journalnode3.server:
         image: tumingjian/oracle-jdk
@@ -102,6 +108,9 @@ services:
         working_dir: /usr/local/hadoop
         dns:
            - 172.18.0.250
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.243
         container_name: cluster.journalnode3.server
     cluster.datanode1.server:
         image: tumingjian/oracle-jdk
