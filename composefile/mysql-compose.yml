@@ -1,0 +1,22 @@
+version : '2'
+services:
+    cluster.mysql1.server:
+        image: mysql
+        restart: always
+        volumes: 
+           - /opt/soft/mysql/data /var/lib/mysql 
+        environment: 
+           MYSQL_ROOT_PASSWORD: 123456
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.254
+        ports:
+           - "3306:3306"
+        dns:
+           - 172.18.0.250
+        container_name: cluster.mysql1.server
+networks:   
+  default:
+    external:
+      name: "docker-net"
+

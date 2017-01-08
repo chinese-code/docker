@@ -1,0 +1,20 @@
+version : '2'
+services:
+    cluster.hbase.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        volumes: 
+           - /opt/soft/hbase-1.2.4:/mnt/hbase 
+        command: sh -c "/usr/sbin/sshd && bin/start-hbase.sh && tail -f logs/*"
+        working_dir: /mnt/hbase
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.211
+        dns:
+           - 172.18.0.250
+        container_name: cluster.hbase.server
+networks:   
+  default:
+    external:
+      name: "docker-net"
+

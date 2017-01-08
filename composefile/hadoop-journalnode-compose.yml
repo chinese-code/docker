@@ -1,0 +1,58 @@
+version : '2'
+services:
+    cluster.journalnode1.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && bin/hdfs journalnode"
+        volumes:
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        dns:
+           - 172.18.0.250
+        mem_limit: 128mb
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.241
+        container_name: cluster.journalnode1.server
+    cluster.journalnode2.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && bin/hdfs journalnode"
+        volumes: 
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        dns:
+           - 172.18.0.250
+        mem_limit: 128mb
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.242
+        container_name: cluster.journalnode2.server
+    cluster.journalnode3.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && bin/hdfs journalnode"
+        volumes: 
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        dns:
+           - 172.18.0.250
+        mem_limit: 128mb
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.243
+        container_name: cluster.journalnode3.server
+networks:
+   default:
+    external:
+      name: "docker-net"
+

@@ -3,7 +3,7 @@ services:
     cluster.namenode1.server:
         image: tumingjian/oracle-jdk
         restart: always
-        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs namenode -format -force && bin/hdfs namenode"
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && bin/hdfs zkfc -formatZK -force && sbin/hadoop-daemon.sh start zkfc && bin/hdfs namenode -format -force && bin/hdfs namenode"
         volumes: 
            - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
         environment:
@@ -15,15 +15,11 @@ services:
              ipv4_address: 172.18.0.231
         dns:
            - 172.18.0.250
-        depends_on:
-           - cluster.journalnode1.server
-           - cluster.journalnode2.server
-           - cluster.journalnode3.server
         container_name: cluster.namenode1.server
     cluster.namenode2.server:
         image: tumingjian/oracle-jdk
         restart: always
-        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd -d"
+        command: sh -c "cp -R /mnt/hadoop-disk/* /usr/local/hadoop && ln -sf /usr/local/hadoop/sbin/* /usr/sbin/ && /usr/sbin/sshd && sbin/hadoop-daemon.sh zkfc && bin/hdfs namenode -bootstrapStandby && bin/hdfs namenode"
         volumes:
            - /opt/soft/hadoop-2.7.3:/mnt/hadoop-disk
         environment:
@@ -35,10 +31,6 @@ services:
              ipv4_address: 172.18.0.232
         dns:
            - 172.18.0.250
-        depends_on:
-           - cluster.journalnode1.server
-           - cluster.journalnode2.server
-           - cluster.journalnode3.server
         container_name: cluster.namenode2.server
     cluster.extramanager.server:
         image: tumingjian/oracle-jdk
@@ -76,6 +68,7 @@ services:
         working_dir: /usr/local/hadoop
         dns:
            - 172.18.0.250
+        mem_limit: 128mb
         networks: 
            default: 
              ipv4_address: 172.18.0.241
@@ -92,6 +85,7 @@ services:
         working_dir: /usr/local/hadoop
         dns:
            - 172.18.0.250
+        mem_limit: 128mb
         networks: 
            default: 
              ipv4_address: 172.18.0.242
@@ -108,6 +102,7 @@ services:
         working_dir: /usr/local/hadoop
         dns:
            - 172.18.0.250
+        mem_limit: 128mb
         networks: 
            default: 
              ipv4_address: 172.18.0.243
@@ -129,9 +124,6 @@ services:
         dns:
            - 172.18.0.250
         container_name: cluster.datanode1.server
-        depends_on: 
-           - cluster.namenode1.server
-           - cluster.extramanager.server
     cluster.datanode2.server:
         image: tumingjian/oracle-jdk
         restart: always
@@ -149,9 +141,6 @@ services:
         dns:
            - 172.18.0.250
         container_name: cluster.datanode2.server
-        depends_on: 
-           - cluster.namenode1.server
-           - cluster.extramanager.server
     cluster.datanode3.server:
         image: tumingjian/oracle-jdk
         restart: always
@@ -169,9 +158,6 @@ services:
         dns:
            - 172.18.0.250
         container_name: cluster.datanode3.server
-        depends_on: 
-           - cluster.namenode1.server
-           - cluster.extramanager.server
     cluster.datanode4.server:
         image: tumingjian/oracle-jdk
         restart: always
@@ -189,9 +175,6 @@ services:
         dns:
            - 172.18.0.250
         container_name: cluster.datanode4.server
-        depends_on:
-           - cluster.namenode1.server
-           - cluster.extramanager.server
 networks: 
    default:
     external:

@@ -1,0 +1,45 @@
+version: '2'
+services: 
+   cluster.znode1.server: 
+        image: zookeeper
+        restart: alawys
+        networks: 
+          default: 
+            ipv4_address: 172.18.0.221
+        mem_limit: 128mb
+        dns: 
+          - 172.18.0.250
+        environment: 
+          ZOO_MY_ID: 1
+          ZOO_SERVERS: server.1=cluster.znode1.server:2888:3888 server.2=cluster.znode2.server:2888:3888 server.3=cluster.znode3.server:2888:3888 
+        container_name: "cluster.znode1.server"
+   cluster.znode2.server:
+        image: zookeeper
+        restart: alawys
+        networks:
+          default:
+            ipv4_address: 172.18.0.222
+        mem_limit: 128mb
+        dns: 
+          - 172.168.0.250
+        environment: 
+          ZOO_MY_ID: 2
+          ZOO_SERVERS: server.1=cluster.znode1.server:2888:3888 server.2=cluster.znode2.server:2888:3888 server.3=cluster.znode3.server:2888:3888
+        container_name: "cluster.znode2.server"
+   cluster.znode3.server:
+        image: zookeeper
+        restart: alawys
+        networks:
+          default:
+            ipv4_address: 172.18.0.223
+        mem_limit: 128mb
+        dns: 
+          - 172.18.0.250
+        environment: 
+          ZOO_MY_ID: 3
+          ZOO_SERVERS: server.1=cluster.znode1.server:2888:3888 server.2=cluster.znode2.server:2888:3888 server.3=cluster.znode3.server:2888:3888
+        container_name: "cluster.znode3.server"
+networks: 
+  default:
+    external: 
+      name: "docker-net"     

@@ -1,0 +1,82 @@
+version : '2'
+services:
+    cluster.datanode1.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && sbin/yarn-daemon.sh start nodemanager &&  bin/hdfs datanode"
+        volumes:
+          - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 2048mb
+        cpuset: 0,3
+        hostname: cluster.datanode1.server
+        networks:
+           default: 
+              ipv4_address: 172.18.0.11
+        dns:
+           - 172.18.0.250
+        container_name: cluster.datanode1.server
+    cluster.datanode2.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && sbin/yarn-daemon.sh start nodemanager &&  bin/hdfs datanode"
+        volumes:
+          - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 2048mb
+        cpuset: 0,3
+        hostname: cluster.datanode2.server
+        networks:
+           default:
+              ipv4_address: 172.18.0.12
+        dns:
+           - 172.18.0.250
+        container_name: cluster.datanode2.server
+    cluster.datanode3.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && sbin/yarn-daemon.sh start nodemanager &&  bin/hdfs datanode"
+        volumes:
+          - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 2048mb
+        cpuset: 0,3
+        hostname: cluster.datanode3.server
+        networks:
+           default:
+              ipv4_address: 172.18.0.13
+        dns:
+           - 172.18.0.250
+        container_name: cluster.datanode3.server
+    cluster.datanode4.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && sbin/yarn-daemon.sh start nodemanager &&  bin/hdfs datanode"
+        volumes:
+          - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 256mb
+        cpuset: 0,1
+        hostname: cluster.datanode4.server
+        networks:
+           default:
+              ipv4_address: 172.18.0.14
+        dns:
+           - 172.18.0.250
+        container_name: cluster.datanode4.server
+networks: 
+   default:
+    external:
+      name: "docker-net"

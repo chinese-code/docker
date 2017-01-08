@@ -9,6 +9,7 @@ services:
           - /opt/soft/docker/env/dns.env
         ports: 
           - "53:53"
+        mem_limit: 128mb
         networks: 
           default: 
             ipv4_address: 172.18.0.250
@@ -19,6 +20,7 @@ services:
         ports: 
           - "4500:4500/udp"
           - "500:500/udp"
+        mem_limit: 128mb
         networks: 
           - default
         volumes:  

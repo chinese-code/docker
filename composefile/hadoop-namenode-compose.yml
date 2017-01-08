@@ -1,0 +1,68 @@
+version : '2'
+services:
+    cluster.namenode1.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && bin/hdfs zkfc -formatZK -force && sbin/hadoop-daemon.sh start zkfc && bin/hdfs namenode -format -force && bin/hdfs namenode"
+        #command: sh -c "/usr/sbin/sshd && sbin/hadoop-daemon.sh start zkfc && bin/hdfs namenode -bootstrapStandby && bin/hdfs namenode"
+        volumes: 
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 512m
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.231
+        dns:
+           - 172.18.0.250
+        container_name: cluster.namenode1.server
+    cluster.namenode2.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        #command: sh -c "/usr/sbin/sshd && bin/hdfs zkfc -formatZK -force && sbin/hadoop-daemon.sh start zkfc && bin/hdfs namenode -format -force && bin/hdfs namenode"
+        command: sh -c "/usr/sbin/sshd && sbin/hadoop-daemon.sh start zkfc && bin/hdfs namenode -bootstrapStandby && bin/hdfs namenode"
+        volumes:
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 256m
+        networks:
+           default:
+             ipv4_address: 172.18.0.232
+        dns:
+           - 172.18.0.250
+        container_name: cluster.namenode2.server
+    cluster.extramanager.server:
+        image: tumingjian/oracle-jdk
+        restart: always
+        command: sh -c "/usr/sbin/sshd && sbin/mr-jobhistory-daemon.sh start historyserver && sbin/yarn-daemon.sh start proxyserver && bin/yarn resourcemanager"
+        volumes: 
+           - /opt/soft/hadoop-2.7.3:/mnt/hadoop
+        environment:
+           - HADOOP_HOME=/mnt/hadoop
+           - HADOOP_CONF_DIR=/mnt/hadoop/etc/hadoop
+           - HADOOP_LIBEXEC_DIR=/mnt/hadoop/libexec
+           - HADOOP_MAPRED_HOME=/mnt/hadoop
+        working_dir: /mnt/hadoop
+        mem_limit: 512m
+        ports: 
+           - "18088:18088"
+           - "19888:19888"
+        links: 
+           - cluster.namenode1.server
+           - cluster.namenode2.server
+        networks: 
+           default: 
+             ipv4_address: 172.18.0.253
+        dns:
+           - 172.18.0.250
+        container_name: cluster.extramanager.server
+networks: 
+   default:
+    external:
+      name: "docker-net"
+

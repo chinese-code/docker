@@ -28,8 +28,8 @@
 </property>
 <!--block数据块默认大小-->
 <property>
-<name>dfs.block.size</name>
-<value>8388608</value>
+<name>dfs.blocksize</name>
+<value>8m</value>
 </property>
 <!--namenode最多用多少个线程处理来自dataNode的请求-->
 <property>
