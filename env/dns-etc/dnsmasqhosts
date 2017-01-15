@@ -4,7 +4,7 @@ fe00::0	ip6-localnet
 ff00::0	ip6-mcastprefix
 ff02::1	ip6-allnodes
 ff02::2	ip6-allrouters
-172.18.0.250	0af0f2d38b3c
+172.18.0.250    cluster.dns.server
 172.18.0.231    cluster.namenode1.server
 172.18.0.232    cluster.namenode2.server
 172.18.0.241    cluster.journalnode1.server
@@ -20,3 +20,4 @@ ff02::2	ip6-allrouters
 172.18.0.12    cluster.datanode2.server
 172.18.0.13    cluster.datanode3.server
 172.18.0.14    cluster.datanode4.server
+172.18.0.253   cluster.extramanager.server

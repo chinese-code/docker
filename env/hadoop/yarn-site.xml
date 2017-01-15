@@ -13,6 +13,10 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 <configuration>
+<property>  
+    <name>yarn.log-aggregation-enable</name>  
+    <value>true</value>  
+</property> 
     <property>
         <name>yarn.resourcemanager.address</name>
         <value>cluster.extramanager.server:9001</value>
@@ -42,4 +46,67 @@
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
     </property>
+<property>  
+    <name>mapreduce.application.classpath</name>  
+    <value>
+        /mnt/hadoop/etc/hadoop,
+        /mnt/hadoop/share/hadoop/common/*,
+        /mnt/hadoop/share/hadoop/common/lib/*,
+        /mnt/hadoop/share/hadoop/hdfs/*,
+        /mnt/hadoop/share/hadoop/hdfs/lib/*,
+        /mnt/hadoop/share/hadoop/mapreduce/*,
+        /mnt/hadoop/share/hadoop/mapreduce/lib/*,
+        /mnt/hadoop/share/hadoop/yarn/*,
+        /mnt/hadoop/share/hadoop/yarn/lib/*
+    </value>  
+  </property>
+
+<property>  
+    <name>yarn.nodemanager.resource.memory-mb</name>  
+    <value>2048</value>  
+</property>  
+<property>  
+   <name>yarn.scheduler.minimum-allocation-mb</name>  
+   <value>256</value>  
+</property>  
+<property>
+   <name>yarn.scheduler.maximum-allocation-mb</name>
+   <value>4096</value>
+</property>
+<property>
+   <name>yarn.nodemanager.resource.cpu-vcores</name>
+   <value>1</value>
+</property>
+<property>
+   <name>yarn.scheduler.maximum-allocation-vcores</name>
+   <value>2</value>
+</property>
+<property>  
+    <name>yarn.nodemanager.vmem-pmem-ratio</name>  
+    <value>2.1</value>  
+</property>
+<property> 
+    <name>yarn.web-proxy.address</name> 
+      <value>cluster.extramanager.server:54315</value> 
+</property>   
+<property>
+    <name>yarn.web-proxy.address</name>
+      <value>cluster.extramanager.server:54315</value>
+</property>
+<property>
+    <name>yarn.opportunistic-containers.incr-memory-mb</name>
+      <value>256</value>
+</property>
+<property>
+    <name>yarn.opportunistic-containers.max-memory-mb</name>
+      <value>256</value>
+</property>
+<property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+      <value>false</value>
+</property>
+<property>
+    <name>yarn.nodemanager.pmem-check-enabled</name>
+      <value>false</value>
+</property>
 </configuration>

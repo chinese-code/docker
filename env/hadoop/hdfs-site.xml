@@ -16,6 +16,18 @@
 
 <!-- Put site-specific property overrides in this file. -->
 <configuration>
+<property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+</property>
+<property>  
+    <name>hadoop.proxyuser.root.hosts</name>  
+    <value>*</value>  
+</property>  
+<property>  
+<name>hadoop.proxyuser.root.groups</name>  
+    <value>*</value>  
+</property>
 <!--副本数量-->
 <property>
 <name>dfs.replication</name>
@@ -28,8 +40,8 @@
 </property>
 <!--block数据块默认大小-->
 <property>
-<name>dfs.block.size</name>
-<value>8388608</value>
+<name>dfs.blocksize</name>
+<value>8m</value>
 </property>
 <!--namenode最多用多少个线程处理来自dataNode的请求-->
 <property>
@@ -102,4 +114,8 @@
    <name>dfs.ha.automatic-failover.enabled</name>
    <value>true</value>
  </property>
+　　<property> 
+　　        <name>test.SymlinkEnabledForTesting</name> 
+　　        <value>true</value> 
+　　</property> 
 </configuration>

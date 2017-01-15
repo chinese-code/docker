@@ -5,10 +5,10 @@ services:
         restart: alawys
         cap_add: 
          - NET_ADMIN
-        env_file: 
-          - /opt/soft/docker/env/dns.env
         ports: 
           - "53:53"
+        volumes: 
+          - /opt/soft/docker/env/dns-etc:/mnt/etc
         mem_limit: 128mb
         networks: 
           default: 

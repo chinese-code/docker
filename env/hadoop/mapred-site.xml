@@ -40,4 +40,46 @@
 <name>mapred.local.dir</name>
 <value>/hadoop/mapred</value>
 </property>
+<property>  
+    <name>mapreduce.application.classpath</name>
+    <value>
+        /mnt/hadoop/etc/hadoop,
+        /mnt/hadoop/share/hadoop/common/*,
+        /mnt/hadoop/share/hadoop/common/lib/*,
+        /mnt/hadoop/share/hadoop/hdfs/*,
+        /mnt/hadoop/share/hadoop/hdfs/lib/*,
+        /mnt/hadoop/share/hadoop/mapreduce/*,
+        /mnt/hadoop/share/hadoop/mapreduce/lib/*,
+        /mnt/hadoop/share/hadoop/yarn/*,
+        /mnt/hadoop/share/hadoop/yarn/lib/*
+    </value>  
+</property>
+<property>
+<name>mapreduce.map.memory.mb</name>
+<value>256</value>
+</property>
+<property>
+<name>mapreduce.reduce.memory.mb</name>
+<value>512</value>
+</property>
+<property>
+<name>mapreduce.reduce.java.opts</name>
+<value>-Xmx400m</value>
+</property>
+<property>
+<name>mapreduce.map.java.opts</name>
+<value>-Xmx200m</value>
+</property>
+<property>
+<name>mapreduce.job.running.map.limit</name>
+<value>4</value>
+</property>
+<property>
+<name>mapreduce.job.running.reduce.limit</name>
+<value>4</value>
+</property>
+<property>
+<name>mapreduce.shuffle.max.threads</name>
+<value>4</value>
+</property>
 </configuration>

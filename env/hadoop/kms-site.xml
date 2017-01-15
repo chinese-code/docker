@@ -138,7 +138,7 @@
 
   <property>
     <name>hadoop.kms.authentication.signer.secret.provider.zookeeper.connection.string</name>
-    <value>#HOSTNAME#:#PORT#,...</value>
+    <value>cluster.znode1.server:2181,cluster.znode2.server:2181,cluster.znode3.server:2181</value>
     <description>
       The Zookeeper connection string, a list of hostnames and port comma
       separated.
