@@ -2,7 +2,7 @@ version: '2'
 services: 
    cluster.znode1.server: 
         image: zookeeper
-        restart: alawys
+        restart: always
         networks: 
           default: 
             ipv4_address: 172.18.0.221
@@ -15,7 +15,7 @@ services:
         container_name: "cluster.znode1.server"
    cluster.znode2.server:
         image: zookeeper
-        restart: alawys
+        restart: always
         networks:
           default:
             ipv4_address: 172.18.0.222
@@ -28,7 +28,7 @@ services:
         container_name: "cluster.znode2.server"
    cluster.znode3.server:
         image: zookeeper
-        restart: alawys
+        restart: always
         networks:
           default:
             ipv4_address: 172.18.0.223

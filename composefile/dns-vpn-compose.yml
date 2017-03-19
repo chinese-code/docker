@@ -2,7 +2,7 @@ version: '2'
 services: 
     cluster.dns.server: 
         image: tumingjian/dnsmasq
-        restart: alawys
+        restart: always
         cap_add: 
          - NET_ADMIN
         ports: 
@@ -15,14 +15,14 @@ services:
             ipv4_address: 172.18.0.250
         container_name: "cluster.dns.server"
     cluster.vpn.server:  
-        image: tumingjian/ipsec-vpn-server
-        restart: alawys
+        image: hwdsl2/ipsec-vpn-server
+        restart: always
         ports: 
           - "4500:4500/udp"
           - "500:500/udp"
         mem_limit: 128mb
         networks: 
-          - default
+          - default 
         volumes:  
           - /lib/modules:/lib/modules:ro
         env_file: 
