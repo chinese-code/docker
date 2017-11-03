@@ -1,6 +1,0 @@
-FROM andyshinn/dnsmasq
-RUN sed -i s@^#conf-file=/etc/dnsmasq.more.conf@conf-file=/mnt/etc/dnsmasq.more.conf@g /etc/dnsmasq.conf
-EXPOSE 53
-ENTRYPOINT ["dnsmasq","-k"]
-
-
