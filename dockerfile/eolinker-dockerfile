@@ -1,0 +1,3 @@
+FROM php:7.0-apache
+COPY buildfile/eolinker/ /var/www/html/	
+RUN chown -R -v www-data /var/www/html && usermod -u 1000 www-data && /usr/local/bin/docker-php-ext-install pdo_mysql

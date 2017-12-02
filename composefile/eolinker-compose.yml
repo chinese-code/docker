@@ -1,0 +1,17 @@
+version: '2'
+services: 
+    cluster.eolinker.server: 
+        image: tumingjian/eolinker:daiyu
+        restart: always
+        cap_add: 
+         - NET_ADMIN
+        ports: 
+          - "8100:80"
+        mem_limit: 256mb
+        networks: 
+          default: 
+        container_name: "cluster.eolinker.server"
+networks: 
+  default:
+    external: 
+      name: "docker-net"     
